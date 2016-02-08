@@ -286,7 +286,7 @@ extension WhisperFactory: UINavigationControllerDelegate {
 
       if let index = navigationController.viewControllers.indexOf(viewController) where index > 0 {
         edgeInsetHeight = -WhisperView.Dimensions.height
-        performControllerMove(navigationController.viewControllers[Int(index.value) - 1])
+        performControllerMove(navigationController.viewControllers[Int(index) - 1])
         break
       }
     }
