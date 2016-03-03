@@ -167,7 +167,6 @@ public class ShoutView: UIView {
   public func setupFrames() {
     let totalWidth = UIScreen.mainScreen().bounds.width
     let imageYOffset: CGFloat = UIApplication.sharedApplication().statusBarHidden ? 15 : 25
-    print("offset is \(imageYOffset)")
     
     imageView.frame = CGRect(x: Dimensions.imageOffset, y: imageYOffset,
       width: Dimensions.imageSize, height: Dimensions.imageSize)
@@ -181,7 +180,6 @@ public class ShoutView: UIView {
         $0.preferredMaxLayoutWidth = totalWidth - Dimensions.imageSize - (Dimensions.imageOffset * 2)
         $0.frame.size.width = totalWidth - Dimensions.imageSize - (Dimensions.imageOffset * 2)
         $0.sizeToFit()
-        print("label height after sizing is \($0.frame.size.height)")
     }
 
     titleLabel.frame.origin = CGPoint(x: Dimensions.textOffset, y: imageView.frame.origin.y + 3)
