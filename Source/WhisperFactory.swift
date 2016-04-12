@@ -30,6 +30,7 @@ class WhisperFactory: NSObject {
   var whisperView: WhisperView!
   var delayTimer = NSTimer()
   var presentTimer = NSTimer()
+  var navigationStackCount = 0
 
   // MARK: - Initializers
 
@@ -88,7 +89,7 @@ class WhisperFactory: NSObject {
 
   func silentWhisper(controller: UINavigationController, after: NSTimeInterval) {
     navigationController = controller
-    
+
     var whisperSubview: WhisperView? = nil
     for subview in navigationController.navigationBar.subviews {
       if let whisper = subview as? WhisperView {
@@ -152,10 +153,11 @@ class WhisperFactory: NSObject {
     hideView()
 
     let title = message.title
-    let color = message.color
+    let textColor = message.textColor
+    let backgroundColor = message.backgroundColor
     let action = action.rawValue
 
-    var array = ["title": title, "color": color, "action": action]
+    var array = ["title": title, "textColor" : textColor, "backgroundColor": backgroundColor, "action": action]
     if let images = message.images { array["images"] = images }
 
     presentTimer = NSTimer.scheduledTimerWithTimeInterval(AnimationTiming.movement * 1.1, target: self,
@@ -185,7 +187,8 @@ class WhisperFactory: NSObject {
   func presentFired(timer: NSTimer) {
     guard let userInfo = timer.userInfo,
       title = userInfo["title"] as? String,
-      color = userInfo["color"] as? UIColor,
+      textColor = userInfo["textColor"] as? UIColor,
+      backgroundColor = userInfo["backgroundColor"] as? UIColor,
       actionString = userInfo["action"] as? String else { return }
 
     var images: [UIImage]? = nil
@@ -193,7 +196,7 @@ class WhisperFactory: NSObject {
     if let imageArray = userInfo["images"] as? [UIImage]? { images = imageArray }
 
     let action = Action(rawValue: actionString)
-    let message = Message(title: title, color: color, images: images)
+    let message = Message(title: title, textColor: textColor, backgroundColor: backgroundColor, images: images)
 
     whisperView = WhisperView(height: navigationController.navigationBar.frame.height, message: message)
     navigationController.navigationBar.addSubview(whisperView)
@@ -213,7 +216,17 @@ class WhisperFactory: NSObject {
   // MARK: - Animations
 
   func moveControllerViews(down: Bool) {
-    guard let visibleController = navigationController.visibleViewController else { return }
+    guard let visibleController = navigationController.visibleViewController
+      where Config.modifyInset
+      else { return }
+
+    let stackCount = navigationController.viewControllers.count
+
+    if down {
+      navigationStackCount = stackCount
+    } else if navigationStackCount != stackCount {
+      return
+    }
 
     if !(edgeInsetHeight == WhisperView.Dimensions.height && down) {
       edgeInsetHeight = down ? WhisperView.Dimensions.height : -WhisperView.Dimensions.height
@@ -225,6 +238,8 @@ class WhisperFactory: NSObject {
   }
 
   func performControllerMove(viewController: UIViewController) {
+    guard Config.modifyInset else { return }
+
     if let tableView = viewController.view as? UITableView
       where viewController is UITableViewController {
         tableView.contentInset = UIEdgeInsetsMake(tableView.contentInset.top + edgeInsetHeight, 0, 0, 0)

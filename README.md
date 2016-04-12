@@ -1,6 +1,7 @@
 ![Whisper](https://github.com/hyperoslo/Whisper/blob/master/Resources/whisper-cover.png)
 
 [![Version](https://img.shields.io/cocoapods/v/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
+[![CI Status](http://img.shields.io/travis/hyperoslo/Whisper.svg?style=flat)](https://travis-ci.org/hyperoslo/Whisper)
 [![Carthage](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
 [![Platform](https://img.shields.io/cocoapods/p/Whisper.svg?style=flat)](http://cocoadocs.org/docsets/Whisper)
@@ -42,7 +43,7 @@ The usage of the component is so simple, you just create a message in the case o
 ##### For a Whisper:
 
 ```swift
-let message = Message(title: "Enter your message here.", color: UIColor.redColor())
+let message = Message(title: "Enter your message here.", backgroundColor: UIColor.redColor())
 Whisper(message, to: navigationController, action: .Present)
 ```
 
@@ -59,6 +60,8 @@ Shout(announcement, to: self)
 let murmur = Murmur(title: "This is a small whistle...")
 Whistle(murmur)
 ```
+
+If you want to use **Whisper** with Objective-C, you can find information about it [here](https://github.com/hyperoslo/Whisper/wiki/Using-Whisper-in-Objective-C).
 
 ## Installation
 
@@ -91,7 +94,7 @@ In the future the idea is to keep improving and add some features:
 
 ## Contribute
 
-We would love you to contribute to **Whisper**, check the [CONTRIBUTING](https://github.com/hyperoslo/Whisper/blob/master/CONTRIBUTING.md) file for more info.
+We would love for you to contribute to **Whisper**, check the [CONTRIBUTING](https://github.com/hyperoslo/Whisper/blob/master/CONTRIBUTING.md) file for more info.
 
 ## License
 
