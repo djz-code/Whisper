@@ -18,7 +18,7 @@ public class WhisperView: UIView {
   public lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .Center
-    label.font = UIFont(name: "HelveticaNeue", size: 13)
+    label.font = UIFont.init(name: "HelveticaNeue", size: 13) // weird bug fix: http://stackoverflow.com/questions/36163273/uifont-is-not-convertible-to-uifont
     label.frame.size.width = UIScreen.mainScreen().bounds.width - 60
 
     return label
